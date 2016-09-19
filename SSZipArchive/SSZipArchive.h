@@ -10,7 +10,7 @@
 #define _SSZIPARCHIVE_H
 
 #import <Foundation/Foundation.h>
-#include "Common.h"
+#include "SSZipCommon.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,6 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)unzipFileAtPath:(NSString *)path toDestination:(NSString *)destination overwrite:(BOOL)overwrite password:(nullable NSString *)password error:(NSError * *)error;
 + (BOOL)unzipFileAtPath:(NSString *)path toDestination:(NSString *)destination overwrite:(BOOL)overwrite password:(nullable NSString *)password error:(NSError * *)error delegate:(nullable id<SSZipArchiveDelegate>)delegate NS_REFINED_FOR_SWIFT;
+
++ (BOOL)unzipFileAtPath:(NSString *)path
+          toDestination:(NSString *)destination
+     preserveAttributes:(BOOL)preserveAttributes
+              overwrite:(BOOL)overwrite
+               password:(nullable NSString *)password
+                  error:(NSError * *)error
+               delegate:(nullable id<SSZipArchiveDelegate>)delegate;
 
 + (BOOL)unzipFileAtPath:(NSString *)path
     toDestination:(NSString *)destination
