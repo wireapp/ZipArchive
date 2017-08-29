@@ -16,6 +16,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var zipButton: UIButton!
     @IBOutlet weak var unzipButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
@@ -29,6 +30,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        file1.text = ""
+        file2.text = ""
+        file3.text = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,12 +46,14 @@ class ViewController: UIViewController {
     @IBAction func zipPressed(_: UIButton) {
         let sampleDataPath = Bundle.main.bundleURL.appendingPathComponent("Sample Data").path
         zipPath = tempZipPath()
+        let password = passwordField.text
 
-        let success = SSZipArchive.createZipFile(atPath: zipPath!, withContentsOfDirectory: sampleDataPath)
+        let success = SSZipArchive.createZipFile(atPath: zipPath!, withContentsOfDirectory: sampleDataPath, withPassword: password?.isEmpty == false ? password : nil)
         if success {
             unzipButton.isEnabled = true
             zipButton.isEnabled = false
         }
+        resetButton.isEnabled = true
     }
 
     @IBAction func unzipPressed(_: UIButton) {
@@ -58,8 +65,10 @@ class ViewController: UIViewController {
             return
         }
 
-        let success = SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath)
-        if !success {
+        let password = passwordField.text
+        let success: Void? = try? SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath, overwrite: true, password: password?.isEmpty == false ? password : nil)
+        if success == nil {
+            print("No success")
             return
         }
 
@@ -84,7 +93,6 @@ class ViewController: UIViewController {
         }
 
         unzipButton.isEnabled = false
-        resetButton.isEnabled = true
     }
 
     @IBAction func resetPressed(_: UIButton) {

@@ -23,7 +23,7 @@
 @implementation CancelDelegate
 - (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
-    _numFilesUnzipped = fileIndex + 1;
+    _numFilesUnzipped = (int)fileIndex + 1;
 }
 - (BOOL)zipArchiveShouldUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath fileInfo:(unz_file_info)fileInfo
 {
@@ -173,7 +173,38 @@
     XCTAssertTrue([fileManager fileExistsAtPath:testPath], @"LICENSE unzipped");
 }
 
-- (void)testPasswordCheck {
+- (void)testUnzippingWithInvalidPassword {
+    NSString *zipPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"TestPasswordArchive" ofType:@"zip"];
+    NSString *outputPath = [self _cachesPath:@"Password"];
+    
+    NSError *error = nil;
+    [SSZipArchive unzipFileAtPath:zipPath toDestination:outputPath overwrite:YES password:@"passw0rd123" error:&error delegate:self];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *testPath = [outputPath stringByAppendingPathComponent:@"Readme.markdown"];
+    XCTAssertFalse([fileManager fileExistsAtPath:testPath], @"Readme not unzipped");
+    
+    testPath = [outputPath stringByAppendingPathComponent:@"LICENSE"];
+    XCTAssertFalse([fileManager fileExistsAtPath:testPath], @"LICENSE not unzipped");
+}
+
+
+- (void)testIsPasswordInvalidForArchiveAtPath {
+    NSString *zipPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"TestPasswordArchive" ofType:@"zip"];
+    
+    NSError *error = nil;
+    
+    BOOL fileHasValidPassword = [SSZipArchive isPasswordValidForArchiveAtPath:zipPath password:@"passw0rd" error:&error];
+    
+    XCTAssertTrue(fileHasValidPassword,@"Valid password reports false.");
+    
+    BOOL fileHasInvalidValidPassword = [SSZipArchive isPasswordValidForArchiveAtPath:zipPath password:@"passw0rd123" error:&error];
+    
+    XCTAssertFalse(fileHasInvalidValidPassword,@"Invalid password reports true.");
+    
+}
+
+- (void)testIsFilePasswordProtectedAtPath {
     NSString *zipPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"TestArchive" ofType:@"zip"];
     
     BOOL protected = [SSZipArchive isFilePasswordProtectedAtPath:zipPath];
