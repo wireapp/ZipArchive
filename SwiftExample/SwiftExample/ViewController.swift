@@ -36,11 +36,6 @@ class ViewController: UIViewController {
         file3.text = ""
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: IBAction
 
     @IBAction func zipPressed(_: UIButton) {
@@ -48,10 +43,19 @@ class ViewController: UIViewController {
         zipPath = tempZipPath()
         let password = passwordField.text
 
-        let success = SSZipArchive.createZipFile(atPath: zipPath!, withContentsOfDirectory: sampleDataPath, withPassword: password?.isEmpty == false ? password : nil)
+        let success = SSZipArchive.createZipFile(atPath: zipPath!,
+                                                 withContentsOfDirectory: sampleDataPath,
+                                                 keepParentDirectory: false,
+                                                 compressionLevel: -1,
+                                                 password: password?.isEmpty == false ? password : nil,
+                                                 aes: true,
+                                                 progressHandler: nil)
         if success {
+            print("Success zip")
             unzipButton.isEnabled = true
             zipButton.isEnabled = false
+        } else {
+            print("No success zip")
         }
         resetButton.isEnabled = true
     }
@@ -66,9 +70,20 @@ class ViewController: UIViewController {
         }
 
         let password = passwordField.text
-        let success: Void? = try? SSZipArchive.unzipFile(atPath: zipPath, toDestination: unzipPath, overwrite: true, password: password?.isEmpty == false ? password : nil)
-        if success == nil {
-            print("No success")
+        let success: Bool = SSZipArchive.unzipFile(atPath: zipPath,
+                                                   toDestination: unzipPath,
+                                                   preserveAttributes: true,
+                                                   overwrite: true,
+                                                   nestedZipLevel: 1,
+                                                   password: password?.isEmpty == false ? password : nil,
+                                                   error: nil,
+                                                   delegate: nil,
+                                                   progressHandler: nil,
+                                                   completionHandler: nil)
+        if success != false {
+            print("Success unzip")
+        } else {
+            print("No success unzip")
             return
         }
 
@@ -122,8 +137,6 @@ class ViewController: UIViewController {
         } catch {
             return nil
         }
-
-
         return url.path
     }
     

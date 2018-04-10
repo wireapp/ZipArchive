@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0820"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DFE19E91BDA9FF300709011"
-               BuildableName = "ObjectiveCExample.app"
-               BlueprintName = "ObjectiveCExample"
-               ReferencedContainer = "container:ObjectiveCExample.xcodeproj">
+               BlueprintIdentifier = "37952C251F63B50D00DD6677"
+               BuildableName = "ZipArchive.framework"
+               BlueprintName = "ZipArchive-tvos"
+               ReferencedContainer = "container:ZipArchive.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DFE1A021BDA9FF300709011"
-               BuildableName = "ObjectiveCExampleTests.xctest"
-               BlueprintName = "ObjectiveCExampleTests"
-               ReferencedContainer = "container:ObjectiveCExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8DFE19E91BDA9FF300709011"
-            BuildableName = "ObjectiveCExample.app"
-            BlueprintName = "ObjectiveCExample"
-            ReferencedContainer = "container:ObjectiveCExample.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -61,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8DFE19E91BDA9FF300709011"
-            BuildableName = "ObjectiveCExample.app"
-            BlueprintName = "ObjectiveCExample"
-            ReferencedContainer = "container:ObjectiveCExample.xcodeproj">
+            BlueprintIdentifier = "37952C251F63B50D00DD6677"
+            BuildableName = "ZipArchive.framework"
+            BlueprintName = "ZipArchive-tvos"
+            ReferencedContainer = "container:ZipArchive.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8DFE19E91BDA9FF300709011"
-            BuildableName = "ObjectiveCExample.app"
-            BlueprintName = "ObjectiveCExample"
-            ReferencedContainer = "container:ObjectiveCExample.xcodeproj">
+            BlueprintIdentifier = "37952C251F63B50D00DD6677"
+            BuildableName = "ZipArchive.framework"
+            BlueprintName = "ZipArchive-tvos"
+            ReferencedContainer = "container:ZipArchive.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
