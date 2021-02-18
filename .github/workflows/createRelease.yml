@@ -1,0 +1,32 @@
+name: create release from upstream latest relase tag
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    runs-on: macos-10.15
+    env:
+        UPSTREAM_REPO: ZipArchive/ZipArchive
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+    
+      - name: update fork
+        run: |
+          bash <(curl --silent https://raw.githubusercontent.com/billypchan/iosGitHubTools/master/scripts/updateFork.sh) https://github.com/${{ env.UPSTREAM_REPO }}
+      - name: check out release tag
+        run: |
+          bash <(curl --silent https://raw.githubusercontent.com/billypchan/iosGitHubTools/master/scripts/checkoutReleaseTag.sh) ${{ env.UPSTREAM_REPO }}
+      - name: make framwwork
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_11.4.1.app/Contents/Developer
+        run: |
+          bash <(curl --silent https://raw.githubusercontent.com/billypchan/iosGitHubTools/master/scripts/createCarthageFramwork.sh)
+      - name: submit release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash <(curl --silent https://raw.githubusercontent.com/billypchan/iosGitHubTools/master/scripts/submitCarthageRelease.sh) ${{ env.UPSTREAM_REPO }}
+        
